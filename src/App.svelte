@@ -1,39 +1,53 @@
 <script lang="ts">
-  import { router, ROUTES } from './router/router';
-  import Tabs from './components/Tabs.svelte';
-  const tabItems = [
-    {
-      label: 'Kredyt Inwestycyjny',
-      content: 'test23',
-      href: ROUTES.HOME,
-    },
-    {
-      label: 'Pożyczka AGRO',
-      content: 'test223',
-      href: ROUTES.AGRO,
-    },
-  ];
+  import Agro from './pages/Agro.svelte';
+  import Home from './pages/Home.svelte';
+  import NotFound from './pages/404.svelte';
+  import { ROUTES, Router, attach } from './router/router';
+
+  const RouteConfig = {
+    [ROUTES.HOME]: Home,
+    [ROUTES.AGRO]: Agro,
+    default: NotFound,
+  };
+
+  // attach to router state
+  $attach;
+
+  const router = new Router(RouteConfig);
 </script>
 
 <main>
-  {#if router.is404()}
-    <h1>404</h1>
-  {:else}
-    <h1>Kalkulator Kredytowy</h1>
-    <Tabs {tabItems} />
-  {/if}
+  <svelte:component this={router.component} />
 </main>
 
 <style lang="scss">
   main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     height: 100vh;
     width: 100%;
-    h1 {
-      font-size: 2rem;
-      margin: 2rem 0;
-    }
+    background-color: var(--color-200);
+    color: var(--color-1000);
+  }
+
+  :root {
+    // colors
+    --color-0: #fff;
+    --color-50: #fafafa;
+    --color-100: #f5f5f5;
+    --color-200: #e5e5e5;
+    --color-300: #d4d4d4;
+    --color-400: #a3a3a3;
+    --color-500: #737373;
+    --color-600: #525252;
+    --color-700: #404040;
+    --color-800: #262626;
+    --color-900: #171717;
+    --color-1000: #000;
+
+    // fonts
+    --font-12: 0.75rem;
+    --font-14: 0.875rem;
+    --font-16: 1rem;
+    --font-18: 1.125rem;
+    --font-24: 1.5rem;
   }
 </style>

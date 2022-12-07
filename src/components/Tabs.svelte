@@ -1,58 +1,70 @@
 <script lang="ts">
-  import { type ROUTES, router, pathname } from '../router/router';
+  import { useRouter, type ROUTES } from '../router/router';
+  import type { TabItem } from '../types/tabs.type';
+  import Link from './Link.svelte';
 
-  export let tabItems: { label: string; content: string; href: ROUTES }[];
+  export let tabItems: TabItem[];
 
-  $: activeTab = tabItems.find(tab => tab.href === $pathname);
+  const { push, pathname } = useRouter();
 
-  const onTabClick = (e: MouseEvent, pathname: ROUTES) => {
-    e.preventDefault();
-    router.navigateTo(pathname);
+  $: activeTab = tabItems.find(tab => tab.href === pathname);
+
+  const onTabClick = (pathname: ROUTES) => {
+    push(pathname);
   };
 </script>
 
-<div class="main">
+<div class="container">
   <div class="tab-container">
     {#each tabItems as tab}
-      <a
+      <Link
         class={`tab ${tab.href === activeTab.href ? 'active' : ''}`}
-        on:click={e => onTabClick(e, tab.href)}
-        href={tab.href}>{tab.label}</a
-      >
+        href={tab.href}
+        ><div class="inner">{tab.label}</div>
+      </Link>
     {/each}
   </div>
-  <section>{activeTab.content}</section>
+  <section>
+    <svelte:component this={activeTab.content} />
+  </section>
 </div>
 
 <style lang="scss">
-  .main {
+  .container {
+    background-color: var(--color-300);
     width: 100%;
     height: 100%;
-    background: rgb(8, 36, 157);
-    background: linear-gradient(
-      0deg,
-      rgba(8, 36, 157, 1) 0%,
-      rgba(19, 166, 184, 1) 100%
-    );
-    .tab-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-      .tab {
-        border-radius: 0.5rem;
-        padding: 1rem 0.5rem;
-        width: 100%;
-        cursor: pointer;
-        text-decoration: none;
-      }
-      :not(.active) {
-        background-color: #222;
-      }
-    }
 
     section {
+      background-color: var(--color-500);
       height: 100%;
+    }
+
+    .tab-container {
+      width: 100%;
+      display: flex;
+
+      .inner {
+        margin: 1rem 0;
+        border-bottom: 3px solid var(--color-400);
+        height: calc(100% - 3px);
+      }
+
+      :global(.tab) {
+        width: 100%;
+        font-size: var(--font-18);
+        padding: 1rem;
+        &:hover {
+          background-color: var(--color-400);
+        }
+      }
+
+      :global(.tab.active) {
+        background-color: var(--color-500);
+        &:hover {
+          background-color: var(--color-600);
+        }
+      }
     }
   }
 </style>
