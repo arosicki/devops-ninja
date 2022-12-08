@@ -19,8 +19,10 @@
     color: var(--color-1000);
     font-size: var(--font-14);
     font-weight: 500;
-    :hover {
-      text-decoration: underline;
+    &:focus {
+      outline: none;
+      box-shadow: var(--focus);
+      transition: box-shadow 0.2s ease-in-out;
     }
   }
 </style>

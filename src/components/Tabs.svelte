@@ -50,6 +50,11 @@
         height: calc(100% - 3px);
       }
 
+      :global(.tab:focus .inner) {
+        border-bottom: none;
+        transition: border 0.2s ease-in-out;
+      }
+
       :global(.tab) {
         width: 100%;
         font-size: var(--font-18);

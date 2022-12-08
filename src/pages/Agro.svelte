@@ -1,9 +1,35 @@
 <script>
+  import Divider from '../components/Divider.svelte';
   import Tabs from '../components/Tabs.svelte';
   import { tabConfig } from '../views/tabConfig';
 </script>
 
-<div>
-  <h1>Kalkulator Kredytowy</h1>
+<div class="container">
+  <div>
+    <h1>Kalkulator Kredytowy</h1>
+    <Divider class="page-divider" />
+  </div>
   <Tabs tabItems={tabConfig} />
 </div>
+
+<style lang="scss">
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    > div {
+      margin: 2rem 0;
+      h1 {
+        font-size: 2rem;
+      }
+
+      :global(.page-divider) {
+        margin: 0.5rem 1rem;
+      }
+    }
+  }
+</style>

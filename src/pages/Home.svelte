@@ -25,6 +25,11 @@
     > div {
       margin: 2rem 0;
 
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 500;
+      }
+
       :global(.page-divider) {
         margin: 0.5rem 1rem;
       }

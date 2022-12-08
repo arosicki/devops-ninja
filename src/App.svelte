@@ -49,5 +49,8 @@
     --font-16: 1rem;
     --font-18: 1.125rem;
     --font-24: 1.5rem;
+
+    // focus
+    --focus: inset 0 0 0 3px var(--color-1000);
   }
 </style>
