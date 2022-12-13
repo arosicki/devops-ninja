@@ -2,21 +2,29 @@
   import { ROUTES, useRouter } from '../router/router';
 
   let className: string = undefined;
+  let disabled = false;
   let href: ROUTES;
 
-  export { href, className as class };
+  export { disabled, href, className as class };
 
   const router = useRouter();
 </script>
 
-<a on:click|preventDefault={() => router.push(href)} {href} class={className}
-  ><slot /></a
->
+{#if !disabled}
+  <a on:click|preventDefault={() => router.push(href)} {href} class={className}>
+    <slot />
+  </a>
+{:else}
+  <div class={className}>
+    <slot />
+  </div>
+{/if}
 
 <style lang="scss">
-  a {
+  a,
+  div {
     text-decoration: none;
-    color: var(--color-1000);
+    color: var(--color-100);
     font-size: var(--font-14);
     font-weight: 500;
     &:focus {

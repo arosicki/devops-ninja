@@ -5,13 +5,9 @@
 
   export let tabItems: TabItem[];
 
-  const { push, pathname } = useRouter();
+  const { pathname } = useRouter();
 
   $: activeTab = tabItems.find(tab => tab.href === pathname);
-
-  const onTabClick = (pathname: ROUTES) => {
-    push(pathname);
-  };
 </script>
 
 <div class="container">
@@ -20,6 +16,7 @@
       <Link
         class={`tab ${tab.href === activeTab.href ? 'active' : ''}`}
         href={tab.href}
+        disabled={tab.href === activeTab.href}
         ><div class="inner">{tab.label}</div>
       </Link>
     {/each}
@@ -32,12 +29,19 @@
 <style lang="scss">
   .container {
     background-color: var(--color-300);
-    width: 100%;
+    width: calc(100% - 3rem);
     height: 100%;
+    margin: 0 1.5rem;
+
+    @media screen and (max-width: 968px) {
+      width: 100%;
+      margin: 0;
+    }
 
     section {
-      background-color: var(--color-500);
+      background-color: var(--tabs-background);
       height: 100%;
+      padding-bottom: 2rem;
     }
 
     .tab-container {
@@ -58,17 +62,16 @@
       :global(.tab) {
         width: 100%;
         font-size: var(--font-18);
+        background-color: var(--tabs);
         padding: 1rem;
         &:hover {
-          background-color: var(--color-400);
+          background-color: var(--tabs--hover);
         }
       }
 
       :global(.tab.active) {
-        background-color: var(--color-500);
-        &:hover {
-          background-color: var(--color-600);
-        }
+        background-color: var(--tabs-background);
+        pointer-events: none;
       }
     }
   }

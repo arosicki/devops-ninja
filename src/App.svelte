@@ -24,8 +24,8 @@
   main {
     height: 100vh;
     width: 100%;
-    background-color: var(--color-200);
-    color: var(--color-1000);
+    background-color: var(--background);
+    color: var(--color-100);
   }
 
   :root {
@@ -43,6 +43,27 @@
     --color-900: #171717;
     --color-1000: #000;
 
+    --background: #111827;
+
+    --tabs: #374151;
+    --tabs-background: #1f2937;
+    --tabs--hover: #303c49;
+
+    --color-link: #1d4ed8;
+    --color-link--hover: #2563eb;
+
+    --button-primary: #312e81;
+    --button-primary--hover: #3730a3;
+    --button-primary__border: #1e3a8a;
+
+    --button-secondary: transparent;
+    --button-secondary--hover: rgba(255, 255, 255, 0.1);
+
+    --input-background: #4b5563;
+    --select--hover: #374151;
+
+    --color-error: #e11d48;
+
     // fonts
     --font-12: 0.75rem;
     --font-14: 0.875rem;
@@ -51,6 +72,7 @@
     --font-24: 1.5rem;
 
     // focus
-    --focus: inset 0 0 0 3px var(--color-1000);
+    --focus: inset 0 0 0 3px var(--color-100);
+    --error-focus: inset 0 0 0 2px var(--color-error);
   }
 </style>

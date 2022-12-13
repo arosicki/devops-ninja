@@ -1,12 +1,14 @@
 <script>
   import Divider from '../components/Divider.svelte';
+
+  document.title = 'Nie Znaleziono - Kalkulator Kredytowy';
 </script>
 
 <div class="container">
   <div>
     <h1>404</h1>
     <Divider class="divider-404" />
-    <p>Page not found</p>
+    <p>Nie znaleziono strony</p>
   </div>
 </div>
 

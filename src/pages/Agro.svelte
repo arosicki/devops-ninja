@@ -2,6 +2,8 @@
   import Divider from '../components/Divider.svelte';
   import Tabs from '../components/Tabs.svelte';
   import { tabConfig } from '../views/tabConfig';
+
+  document.title = 'Pożyczka AGRO - Kalkulator Kredytowy';
 </script>
 
 <div class="container">
@@ -9,6 +11,7 @@
     <h1>Kalkulator Kredytowy</h1>
     <Divider class="page-divider" />
   </div>
+
   <Tabs tabItems={tabConfig} />
 </div>
 
@@ -18,13 +21,13 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
 
     > div {
       margin: 2rem 0;
+
       h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
+        font-weight: 500;
       }
 
       :global(.page-divider) {

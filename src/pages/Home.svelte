@@ -2,6 +2,8 @@
   import Divider from '../components/Divider.svelte';
   import Tabs from '../components/Tabs.svelte';
   import { tabConfig } from '../views/tabConfig';
+
+  document.title = 'Kredyt Inwestycyjny - Kalkulator Kredytowy';
 </script>
 
 <div class="container">
@@ -19,8 +21,6 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
 
     > div {
       margin: 2rem 0;
