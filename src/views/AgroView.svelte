@@ -8,7 +8,8 @@
   import Select from '../components/inputs/Select.svelte';
   import TextInput from '../components/inputs/TextInput.svelte';
   import { getFormData } from '../functions/getFormData';
-  import { validateAgroData } from '../functions/validateAgroData';
+  import { generateLoanPDF } from '../functions/pdfGenerators/generateLoanPDF';
+  import { validateAgroData } from '../functions/validators/validateAgroData';
   import type { Agro } from '../types/form.types';
 
   const selectItems = [
@@ -37,13 +38,17 @@
 
   $: errors = [];
 
+  $: formData = undefined;
+
   const onSubmit = (e: SubmitEvent) => {
     const data = getFormData<Agro>(e.target as HTMLFormElement);
     errors = validateAgroData(data);
 
-    if (errors.length === 0) {
-      console.log(data);
-    }
+    if (errors.length !== 0) return;
+
+    const { firstInstallmentData, savePDF } = generateLoanPDF(data);
+
+    formData = { ...firstInstallmentData, savePDF };
   };
 </script>
 
@@ -86,26 +91,30 @@
     />
   </div>
   <div class="left-side">
-    {#if !isMobile}
-      <div class="title">
-        <h2>Wygeneruj harmonogram</h2>
-        <Divider class="left-divider" />
+    {#if formData}
+      <div class="result">
+        <p>Kwota raty: {formData?.installment?.toFixed(2)} PLN</p>
+        <p>Termin płatności: {formData?.date}</p>
+        <p>Część kapitałowa raty: {formData?.capital?.toFixed(2)} PLN</p>
+        <p>Część odsetkowa raty: {formData?.interest?.toFixed(2)} PLN</p>
+        <ButtonSecondary on:click={formData?.savePDF}
+          >Pobierz pdf</ButtonSecondary
+        >
       </div>
     {/if}
-    <div class="buttons">
-      <ButtonPrimary type="submit">Wyślij</ButtonPrimary>
-      <ButtonSecondary type="reset">Wyczyść</ButtonSecondary>
+    <div class="actions">
+      <div class="buttons">
+        <ButtonSecondary type="reset">Wyczyść</ButtonSecondary>
+        <ButtonPrimary type="submit">Wyślij</ButtonPrimary>
+      </div>
     </div>
   </div>
 </form>
 
 <style lang="scss">
   form {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    @media screen and (max-width: 968px) {
-      grid-template-columns: 1fr;
-    }
+    display: flex;
+    flex-direction: column;
 
     width: 100%;
     > div {
@@ -113,34 +122,44 @@
       &.left-side {
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
-        gap: 0.75rem;
-        > .buttons {
+        margin-left: 0.5rem;
+
+        @media screen and (max-width: 968px) {
+          flex-direction: column-reverse;
+        }
+        > .actions {
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
+          align-items: center;
+          gap: 1rem;
+          width: calc(100% - 2rem);
 
-          @media screen and (max-width: 968px) {
-            flex-direction: row-reverse;
-            width: calc(100% - 2rem);
-            padding: 1rem 1rem 0;
+          > .buttons {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
             :global(button) {
               width: 100%;
+              margin: 0 0.5rem;
             }
           }
         }
-        > .title {
-          width: fit-content;
-          :global(.left-divider) {
-            margin: 1rem 1rem 0;
+        > .result {
+          display: flex;
+          flex-direction: column;
+          width: calc(100% - 4rem);
+          background-color: var(--color-background);
+          border-radius: 0.5rem;
+          box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
+          > p {
+            margin: 0.25rem 0;
+            &:last-of-type {
+              margin-bottom: 0.5rem;
+            }
           }
-
-          > h2 {
-            margin: 1rem 0;
-            font-size: 1.25rem;
-            font-weight: 500;
-          }
+          width: calc(100% - 5rem);
+          margin: 0 1rem;
         }
       }
     }

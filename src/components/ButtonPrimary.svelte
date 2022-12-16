@@ -1,12 +1,9 @@
 <script lang="ts">
-  export let onClick: () => void | undefined = undefined;
   export let disabled: boolean = false;
   export let type: 'button' | 'submit' | 'reset' = 'button';
 </script>
 
-<button {type} {disabled} on:click={disabled ? onClick : undefined}
-  ><slot /></button
->
+<button on:click {type} {disabled} on:click><slot /></button>
 
 <style lang="scss">
   button {

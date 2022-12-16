@@ -22,8 +22,9 @@
 
 <style lang="scss">
   main {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
+    padding-bottom: 2rem;
     background-color: var(--background);
     color: var(--color-100);
   }

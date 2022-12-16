@@ -1,16 +1,16 @@
-import type { Loan } from '../types/form.types';
+import type { Loan } from '../../types/form.types';
 
 type LoanValidators = [keyof Loan, (value: Loan[keyof Loan]) => boolean][];
 
 const loanValidators: LoanValidators = [
   ['name', value => value !== ''],
   ['start', value => new Date(value) >= new Date()],
-  ['financing', value => +value > 0],
+  ['financing', value => +value >= 0],
   ['investment', value => +value > 0],
   ['initial', value => +value > 0],
   ['amount', value => +value > 0],
-  ['commission', value => +value > 0 && +value <= 100],
-  ['interest', value => +value > 0 && +value <= 100],
+  ['commission', value => +value >= 0 && +value <= 100],
+  ['interest', value => +value >= 0 && +value <= 100],
   ['schedule', value => ['monthly', 'quarterly'].includes(value)],
 ];
 

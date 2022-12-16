@@ -7,7 +7,7 @@ export interface Loan {
   amount: string;
   commission: string;
   interest: string;
-  schedule: string;
+  schedule: 'monthly' | 'quarterly';
 }
 
 export interface Agro {
@@ -16,5 +16,5 @@ export interface Agro {
   financing: string;
   amount: string;
   interest: string;
-  schedule: string;
+  schedule: 'monthly' | 'quarterly';
 }

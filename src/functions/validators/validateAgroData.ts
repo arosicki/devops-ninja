@@ -1,4 +1,4 @@
-import type { Agro } from '../types/form.types';
+import type { Agro } from '../../types/form.types';
 
 type AgroValidators = [keyof Agro, (value: Agro[keyof Agro]) => boolean][];
 
